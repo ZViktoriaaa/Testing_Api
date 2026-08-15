@@ -8,24 +8,22 @@ import static io.restassured.RestAssured.given;
 
 public class CurrencyApi {
     private static final String BASE_URL = PropertyReader.getProperty("base.url");
-    private static final String RATE_TYPE = PropertyReader.getProperty("rate.type");
+    private static final String RATE_ENDPOINT = PropertyReader.getProperty("rate.endpoint");
 
     @Step("Получить курс валюты: {currency}")
     public Response getRate(String currency) {
 
         return given()
                 .queryParam("currency", currency)
-                .queryParam("type", RATE_TYPE)
                 .when()
-                .get(BASE_URL);
+                .get(BASE_URL + RATE_ENDPOINT);
     }
 
     @Step("Получить курс без параметра currency")
     public Response getRateWithoutCurrency() {
 
         return given()
-                .queryParam("type", RATE_TYPE)
                 .when()
-                .get(BASE_URL);
+                .get(BASE_URL + RATE_ENDPOINT);
     }
 }

@@ -4,7 +4,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.DisplayName;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -32,9 +31,8 @@ public class CurrencyApiTest {
         };
     }
 
-    @DisplayName("Проверка курса валюты")
     @Description("Проверяет получение курса USD, EUR и RUB, и основные поля ответа API")
-    @Test(dataProvider = "currencies")
+    @Test(description = "Проверка курса валюты", dataProvider = "currencies")
     public void checkCurrencyRate(String currency, int expectedScale) {
         Response response = currencyApi.getRate(currency);
 
@@ -48,27 +46,24 @@ public class CurrencyApiTest {
                 .body("banks", instanceOf(List.class));
     }
 
-    @DisplayName("Проверка неизвестной валюты")
     @Description("Проверяет, что запрос неизвестной валюты возвращает пустой ответ")
-    @Test
+    @Test(description = "Проверка неизвестной валюты")
     public void checkInvalidCurrency() {
         Response response = currencyApi.getRate("ABC");
 
         verifyEmptyResponse(response);
     }
 
-    @DisplayName("Проверка пустой валюты")
     @Description("Проверяет, что пустое значение currency возвращает пустой ответ")
-    @Test
+    @Test(description = "Проверка пустой валюты")
     public void checkEmptyCurrency() {
         Response response = currencyApi.getRate("");
 
         verifyEmptyResponse(response);
     }
 
-    @DisplayName("Проверка запроса без валюты")
     @Description("Проверяет, что запрос без параметра currency возвращает пустой ответ")
-    @Test
+    @Test(description = "Проверка запроса без валюты")
     public void checkMissingCurrency() {
         Response response = currencyApi.getRateWithoutCurrency();
 
